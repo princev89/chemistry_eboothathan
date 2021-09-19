@@ -1,5 +1,5 @@
 var stepno = 0;
-var result = ["0.2 ml (V0)", "5.0 ml", "7.2 ml", "11.1 ml", "13.2ml", "19.3(v∞)"];
+var result = ["0.2 ml (V0)", "5.0 ml", "7.2 ml", "11.1 ml", "13.2ml", "19.3(vâˆž)"];
 
 var iscompleted = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -147,7 +147,7 @@ function nextStep() {
                     document.getElementById("ouputValue").style.display = "block";
                     document.getElementById("ouputValue").innerHTML = result[processno - 1];
                     if (processno == 5) {
-                        process.innerHTML = "Remaining solution to be kept on water bath at 60.c for 10 min and cool down then repeat steps for calculating v∞.";
+                        process.innerHTML = "Remaining solution to be kept on water bath at 60.c for 10 min and cool down then repeat steps for calculating vâˆž.";
                     }
                     if (processno == 6) {
 
@@ -268,30 +268,10 @@ function imageId(id) {
 }
 
 function isdone(i) {
-    for (var j = 0; j < i; j++) {
+    for (j = 0; j < i; j++) {
         if (iscompleted[j] == 0 || iscompleted[i] == 1) {
             processno--;
-            if (processno == 1) {
-                document.getElementById("experiment_value").style.display = "none";
-            } else {
-                document.getElementById("experiment_value").style.display = "inline-block";
-        
-            }
-            document.getElementById("alert-div").style.display = "grid";
-            processno++;
-        
-            if (processno > 6 || processno < 1) {
-        
-            } else {
-        
-                document.getElementById("alert-div").style.display = "none";
-                document.getElementById("back").innerHTML = `Step No: ` + processno;
-        
-            }
-            if (processno > 1) {
-                fastForward();
-            }
-            document.getElementById("back").innerHTML = `Step No: ` + processno;
+            alert("Your have done wrong procedure, You need to restart simulator");
             return false;
         }
     }
@@ -328,28 +308,23 @@ function getStepValue() {
     document.getElementById("back").innerHTML = `Step No: ` + processno;
 }
 
-//compelte auto 
-async function setMove(){
-    console.log("setMove");
-    for (var i = 0; i < 13; i++) iscompleted[i] = 0;
-    console.log("set move done");
-}
 
 
-async function reload() {
+
+function reload() {
     processno++;
     if (processno > 6) {
         document.getElementById("repeatAgain").style.display = "none";
     }
     document.querySelector("body").innerHTML = doc;
-     console.log("inside reload");
-    setMove().then(startSimulator());
+    for (i = 0; i < 13; i++) iscompleted[i] = 0;
+    startSimulator();
 }
 var isdisplayedtable = 0;
 
 function displayTableValue() {
     document.getElementById("experiment_table_hover").innerHTML = "";
-    for (var i = 0; i < processno - 1; i++) {
+    for (i = 0; i < processno - 1; i++) {
         var elem = document.createElement("p");
         elem.innerHTML = `Step ` + (i + 1) + ` : ` + result[i] + `<br>`;
 
