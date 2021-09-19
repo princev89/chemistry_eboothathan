@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CHEMISTERY EXPERIMENT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+
+
+
+
+<body>
+    <div id="main">
+        <div>
+            <h1>Objective:</h1>
+            <p>To determine the rate constant of the hydrolysis of Ethyl acetate using an acid as acatalyst.</p>
+            <button id="start_button" onclick="startSimulator()">Start</button>
+        </div>
+    </div>
+
+    <div id="alert-div" class="alert-div">
+        <input type="text" id="stepvalue" placeholder="Enter the step number">
+        <button onclick="getStepValue()">OK
+        </button>
+    </div>
+    <div onload="printTableValue()" id="experiment_table_hover">
+
+    </div>
+    <div id="displaySteps">
+    <p>
+1.Add Appratus by clicking button named ADD Appratus</p>
+<p>2.Select a Reagent Bottle & HCL.</p>
+<p>3.Select Ethyl Acetate and add into Reagent Bottle</p>
+<p>4.Stirr the mixture</p>
+<p>5.Add 10(ml) of mixture in 100(ml) conical flask containing ice.</p>
+<p>6.In Solution add some drops of phenolphthalein Indicator.</p>
+<p>7.Bring Conical Flask under the burette.</p>
+<p>8.Fill the burete with NAOH</p>
+<p>9.Start adding NaOH drop until color of the solution become pink.</p>
+<p>10.After getting pink color repeat steps 4 to 9 five times after 10 minutes</p>
+<p>11.Remaining solution to be kept on water bath at 60.c for 10 min and cool down then repeat steps for calculating v<span>&#8734;</span></p>
+<p>12.Repeat steps again and find the value</p>
+</div>
+    <div class="simulator" id="simulator">
+        <nav id="simulator_nav">
+            <h3 id="experimentname">To determine the rate constant of the hydrolysis of Ethyl acetate using an acid as acatalyst.</h3>
+            <div class="p-mega-menu-container">
+                <!-- Item -->
+
+
+                <!-- An item that triggers displaying the mega menu -->
+                <div class="p-mega-menu-trigger">
+                    <!-- The trigger item's content -->
+                    <div>
+                        <button id="add_appratus" onclick="addAppratus()">ADD Appratus</button>
+                    </div>
+
+                    <!-- Mega menu -->
+                    <div id="add_appratus_menu" class="p-mega-menu-content">
+                        <div id="appratus_list">
+                            <div class="flex">
+                                <label>Burette</label>
+                                <img width="100px" height="100px" id="burette_icon" onclick="imageId(this.id);" src="./images/icons/burette_icon.png" alt="">
+
+                                <label>Conical Flask</label>
+                                <img width="100px" height="100px" id="conical_flask" onclick="imageId(this.id);" src="./images/icons/conical_flask.png" alt="">
+                            </div>
+                            <div class="flex">
+                                <label>HCL</label>
+                                <img width="100px" height="100px" id="hcl_bottle_icon" onclick="imageId(this.id);" src="./images/icons/hcl_bottle_icon.png" alt="">
+
+                                <label>Ethyleacitate</label>
+                                <img width="100px" height="100px" id="ethyleacitate_icon" onclick="imageId(this.id);" src="./images/icons/ethyleacitate_icon.png" alt="">
+                            </div>
+                            <div class="flex">
+                                <label>NaOH</label>
+                                <img width="100px" height="100px" id="naoh_icon" onclick="imageId(this.id);" src="./images/icons/naoh_icon.png" alt="">
+
+                                <label>Reagent Bottle</label>
+                                <img width="100px" height="100px" id="reagent_bottle_icon" onclick="imageId(this.id);" src="./images/icons/reagent_bottle_icon.png" alt="">
+                            </div>
+                            <button id="add_appratus_ok" onclick="addAppratusOk()">OK</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="next_menu" class="p-mega-menu-trigger">
+                    <!-- The trigger item's content -->
+                    <div>
+
+                        <button id="back" onclick="back()">Step No: </button>
+                        <button onclick="displayTableValue()" id="experiment_value">Experiment Values</button>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div id="simulator_body">
+            <!-- Sidebar -->
+            <aside>
+
+                <div id="appratus_area"></div>
+            </aside>
+
+            <!-- Main -->
+            <main id="animate_div" style="
+        /* Take the remaining width */
+        flex: 1;
+
+        /* Make it scrollable */
+        overflow: auto;
+    ">		<div class="processstepAndShowbtn" style="display: grid;">
+                <p id="process"></p>
+                <button onclick="displayStep()">Show/Hide Procedure</button>
+            </div>
+                <p id="ouputValue" style="position: absolute; left: 50%; display: none; border: 1px solid black; background-color: white; color: red; border-radius: 3px; padding: 4px 10px;">this is text</p>
+                <button id="next" onclick="nextStep()" class=""></button>
+                <button id="repeatAgain" onclick="reload()">Repeat Again</button>
+
+                <div id="objects">
+                    <img src="./images/objects/peppet/image_part_001.png" id="peppet" alt="">
+                    <!-- burette -->
+                    <img src="./images/objects/burette/image_part_007.png" id="animation_burette" alt="">
+                    <img src="./images/objects/burette/image_part_001.png" id="burette" class="" alt="">
+                    <!-- ethyleacitate flask  -->
+                    <img src="./images/objects/ethyleacitate.png" id="ethyleacitate" onclick="ethyleacitate()" class="" alt="">
+                    <!-- conicak flask png -->
+
+                    <img src="./images/objects/conical_flask/image_part_006.png" id="conical_flask_png" class="" alt="">
+                    <!-- naoh -->
+                    <img src="./images/objects/naoh_icon.png" id="naoh" class="" alt="">
+                    <!-- reagent bottle  -->
+
+
+                    <img src="./images/objects/reagent_bottle.png" id="reagentbottle" class="" alt="">
+                    <!-- hcl bottle  -->
+                    <img src="./images/objects/hcl_bottle.png" id="hcl_bottle" onclick="hclBottle()" class="" alt="">
+                </div>
+                <div id="graph_div" onload="drawChart()">
+
+                    <section style="display: grid; margin: 20px;">
+                        <span style="float: left;padding-left: 0px; color: black;">
+                      <table>
+                        <tr>
+                          <td>S.No.</td>
+                          <th>Time (min)</th>
+                          <th>Volume of solution</th>
+                          <th>Titre value(ml)</th>
+                          <th>(V<sub><span>&#8734;</span></sub>-V<sub>t</sub>)</th>
+                          <th>Log((V<sub><span>&#8734;</span></sub> - V<sub>t</sub>)</th>
+                          <th id="t">Rate of Constant(k)</th>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>0</td>
+                          <td>V<sub>0</sub></td>
+                          <td>0.2</td>
+                          <td>19.1</td>
+                          <td>1.28</td>
+                          <td id="t" style="background-color: red">19.1 (ingnored)</td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>10</td>
+                          <td>V<sub>10</sub></td>
+                          <td>5.0</td>
+                          <td>14.3</td>
+                          <td>1.155</td>
+                          <td id="t">0.0288</td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>20</td>
+                          <td>V<sub>20</sub></td>
+                          <td>8.2</td>
+                          <td>11.1</td>
+                          <td>1.045</td>
+                          <td id="t">0.027</td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td>30</td>
+                          <td>V<sub>30</sub></td>
+                          <td>11.1</td>
+                          <td>7.2</td>
+                          <td>0.914</td>
+                          <td id="t">0.028</td>
+                        </tr>
+                        <tr>
+                          <td>5</td>
+                          <td>40</td>
+                          <td>V<sub>40</sub></td>
+                          <td>13.2</td>
+                          <td>6.1</td>
+                          <td>0.785</td>
+                          <td id="t">0.029</td>
+                        </tr>
+                        <tr>
+                          <td>6</td>
+                          <td><span>&#8734;</span></td>
+                          <td>V<sub><span>&#8734;</span></sub></td>
+                          <td>19.3</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td id="t">--</td>
+                        </tr>
+                      </table>
+                  </span>
+                        <span style="float: left;padding-left: 30px">
+                      <p style="font-size: 20px"><span style="font-weight: bold;">V<sub>0</sub>:</span><span>Initial Volume</span></p>
+                        <p style="font-size: 20px"><span style="font-weight: bold;">V<sub>t</sub>:</span><span>Volume at time "t"</span></p>
+                        <p style="font-size: 20px"><span style="font-weight: bold;">V<sub><span>&#8734;</span></sub>:</span><span>Volume at time 60 min</span></p>
+                        <p style="font-size: 20px"><span style="font-weight: bold;">Calculate Rate Contant(k) using this formula :</span><span>(2.303/t) * ( log((V<sub><span>&#8734;</span></sub>-V<sub>0</sub>)/(V<sub><span>&#8734;</span></sub>-V<sub>t</sub>)))</span></p>
+                        </span>
+                    </section>
+                    <img style="margin-left: 100px;" src="./images/graph.png" alt="">
+                    <div style="margin: 10px 40px;">
+                        <h1>Conclusion:</h1>
+                        <p>In conclusion ,it can be seen from this experiment that rate of reaction is concentation dependent while rate constant is not.Also ,that the rate constant for the hydrolysis of ethyl acetate with sodium hydroxide using HCl as a
+                            catalyst at 28 C is approximately 0.0282 min<sup>-1</sup></p>
+                        <br>
+                        <h1>Result:</h1>
+                        <p>The rate constant for the hydrolysis of an easter from- 1.Calculated value= <span style="color: green; font-size:22px;">0.0282</span></p>
+                    </div>
+                    <div id="linechart_material"></div>
+                </div>
+                <img id="table" src="./images/objects/table.png" class="" alt="">
+
+
+            </main>
+
+
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
