@@ -268,10 +268,30 @@ function imageId(id) {
 }
 
 function isdone(i) {
-    for (j = 0; j < i; j++) {
+    for (var j = 0; j < i; j++) {
         if (iscompleted[j] == 0 || iscompleted[i] == 1) {
             processno--;
-            alert("Your have done wrong procedure, You need to restart simulator");
+            if (processno == 1) {
+                document.getElementById("experiment_value").style.display = "none";
+            } else {
+                document.getElementById("experiment_value").style.display = "inline-block";
+        
+            }
+            document.getElementById("alert-div").style.display = "grid";
+            processno++;
+        
+            if (processno > 6 || processno < 1) {
+        
+            } else {
+        
+                document.getElementById("alert-div").style.display = "none";
+                document.getElementById("back").innerHTML = `Step No: ` + processno;
+        
+            }
+            if (processno > 1) {
+                fastForward();
+            }
+            document.getElementById("back").innerHTML = `Step No: ` + processno;
             return false;
         }
     }
@@ -308,23 +328,28 @@ function getStepValue() {
     document.getElementById("back").innerHTML = `Step No: ` + processno;
 }
 
+//compelte auto 
+async function setMove(){
+    console.log("setMove");
+    for (var i = 0; i < 13; i++) iscompleted[i] = 0;
+    console.log("set move done");
+}
 
 
-
-function reload() {
+async function reload() {
     processno++;
     if (processno > 6) {
         document.getElementById("repeatAgain").style.display = "none";
     }
     document.querySelector("body").innerHTML = doc;
-    for (i = 0; i < 13; i++) iscompleted[i] = 0;
-    startSimulator();
+     console.log("inside reload");
+    setMove().then(startSimulator());
 }
 var isdisplayedtable = 0;
 
 function displayTableValue() {
     document.getElementById("experiment_table_hover").innerHTML = "";
-    for (i = 0; i < processno - 1; i++) {
+    for (var i = 0; i < processno - 1; i++) {
         var elem = document.createElement("p");
         elem.innerHTML = `Step ` + (i + 1) + ` : ` + result[i] + `<br>`;
 
